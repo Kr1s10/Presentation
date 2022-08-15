@@ -1,0 +1,523 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>&lt;Type&gt;Script</h1>
+				</section>
+				<section>
+					<section>
+						<p>TypeScript - is an improved JavaScript.</p>
+						<h3 class="fragment fade-up">Why?</h3>
+					</section>
+					<section>
+						<p><span class="fragment highlight-blue" data-fragment-index="3">Type</span>Script:</p>
+						<ul>
+							<li class="fragment" data-fragment-index="1">a compiled language</li>
+							<li class="fragment" data-fragment-index="2">a static & strongly typed</li>
+							<li class="fragment" data-fragment-index="4">has many built-in types</li>
+							<li class="fragment">has access modifiers in classes</li>
+							<li class="fragment">has interfaces & abstract classes</li>
+						</ul>
+						<aside class="notes">
+							Typescript is a compiled language, while Javascript is an interpreted (интЄрпритед) language, and TypeScript is compiled to Javascript, which allows TypeScript to be supported in all environments that support Javascript.
+							 Also, typescript is static and strongly typed, while Javascript is a dynamic and weakly typed language. Due to its typing, typescript eliminates the possibility of implicit type conversions, which is possible in javascript and leads to unexpected results. At the stage of compiling the code, all types must be set, otherwise typescript will give an error and will not compile the code. This helps to detect and eliminate many bugs even at the development stage and saves time.
+							 Based on the name of language, it is clear that it has many built-in types, which I will talk about. 
+							Another difference of typescript is that it contains access (Єксес) modifiers for properties and methods in classes, interfaces and abstract classes. Due to this, the typescript can fully implement such OOP principles as inheritance (инхЄритенс), polymorphism, and encapsulation.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<span class="hljs-code">Basic Type</span>
+					<h2>any</h2>
+					<pre><code class="hljs" data-trim data-line-numbers>
+						let obj: any = { x: 0 };
+						// None of the following lines of code will throw compiler errors
+						obj.foo();
+						obj();
+						obj.bar = 100;
+						obj = "hello";
+						const n: number = obj;
+					</code></pre>
+					<aside class="notes">
+						TypeScript defines the any type, which doesn’t exist in the JavaScript world. It is the basic type for all other types and is compatible (кємпАтбл) with them. If this type is set, we can access any properties of this value, even if they don’t exist, call this value as a function, and typescript will not throw an error. But specifying the any type is recommended only in extreme cases, because then the benefit of typing is reduced to zero.
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h2>Primitive types</h2>
+					</section>
+					<section>
+						<h4>unknown</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							let v: unknown = 5;
+							// Each of the following lines of code will cause a compiler error
+							v = "hello";
+							v.a = 5;
+							v.a = "";
+							v();
+						</code></pre>
+						<aside class="notes">
+							unknown - is a safe analogue (Аналог) of the any type, it is forbidden to perform any operations on it, except for operations with logical and comparison operators. Any other operation will be treated as an error.
+						</aside>
+					</section>
+					<section>
+						<h4>never</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							function action(): never {
+								throw new Error();
+							};
+						</code></pre>
+						<span class="hljs-code">or</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							function loop(): never {
+								let i = 0;
+								while(true) {
+									i++;
+								}
+							}
+						</code></pre>
+						<h4 class="fragment fade-up" data-fragment-index="1">void</h4>
+						<pre class="fragment fade-up" data-fragment-index="1"><code class="hljs typescript" data-trim data-line-numbers>
+							function sum(a: number, b: number): void {
+								a + b;
+							}
+						</code></pre>
+						<aside class="notes">
+							never - is used to specify that any operation will never be performed. It can only be set to function from which the program can really never exit (throws an error or contains an infinite loop).
+							void - this type can be called the complete opposite of the any type, since this type means the absence (Абсэс) of a concrete type. The main purpose of this type is to explicitly indicate that a function or method does not have a return value.
+						</aside>
+					</section>
+					<section>
+						<h4>enum</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							enum Fruits {
+								Apple, // 0
+								Pear, // 1
+								Banana // 2
+							}
+						</code></pre>
+						<pre class="fragment fade-up"><code class="hljs typescript" data-trim data-line-numbers>
+							enum Keys {
+								A = 10,
+								B, // 11
+								C = 20,
+								D // 21
+							}
+						</code></pre>
+						<aside class="notes">
+							enum - is a set of logically related constants, the values of which can be either numbers or strings. By default, when constants are not explicitly given a value, that value is set from zero in ascending order. If numeric values are not specified for all constants, typescript automatically attempts to set values for constants without them.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Array types</h2>
+						<pre><code class="hljs typescript" data-trim>
+							const arr: number[] = [1, 2, 3];
+						</code></pre>
+						<span class="hljs-code">or</span>
+						<pre><code class="hljs typescript" data-trim>
+							const arr: Array&lt;number&gt; = [1, 2, 3];
+						</code></pre>
+						<aside class="notes">
+							array is a special type for denoting arrays. We can specify it in two ways: specify the type of elements that are in the array and square brackets, or specify the literal array type and the type of elements in single angle brackets after it
+						</aside>
+					</section>
+					<section>
+						<h4>tuple</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							let x: [string, number];
+							// Ok
+							x = ['hello', 10];
+							// Erorr
+							x = [10, 'hello'];
+						</code></pre>
+						<aside class="notes">
+							tuple is a type for arrays. It can be used when you know the exact number of elements that the array contains, their types and location. If the order of the elements is different from the order specified in the type, this will cause an error
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>Functional Types</h4>
+					<pre><code class="hljs typescript" data-trim data-line-numbers>
+						function sum(a: number, b: number): number {
+							return a + b;
+						}
+					</code></pre>
+					<pre><code class="hljs typescript" data-trim data-line-numbers>
+						function getString(arr: string[]): string {
+							return arr.join(' ');
+						}
+					</code></pre>
+					<aside class="notes">
+						Typescript also allows you to type functions, namely the parameters and the return value of the function.
+					</aside>
+					</section>
+					<section>
+						<h4>Optional parameters</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							function f(a: number, b?: number) { // b: number | undefined
+								// ...
+							}
+							f(1); // OK
+							f(1, 2); // OK
+						</code></pre>
+						<aside class="notes">
+							Function parameters can be optional, then typescript will automatically add the undefined type to the optional parameter and in function we will need to check for the existence of this argument.
+						</aside>
+					</section>
+					<section>
+						<h4>Default parameters</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							function f(a: number, b = 5) { // b: number
+								// ...
+							}
+							f(1); // OK
+							f(1, 2); // OK
+						</code></pre>
+						<aside class="notes">
+							Function parameters can have a default value that will be used if the function is called without this argument.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<h4>Generics</h4>
+					<pre><code class="hljs typescript" data-trim data-line-numbers>
+						function identity&lt;Type&gt;(arg: Type): Type {
+							return arg;
+						}
+
+						&lt;number&gt;identity(10) // Type = number
+						identity(10) // Type = number
+						&lt;number&gt;identity('10') // Error: number !== string
+					</code></pre>
+					<pre><code class="hljs typescript" data-trim data-line-numbers>
+						class Animal&lt;T&gt; {
+							constructor(readonly id: T) {}
+						}
+						
+						const bird: Animal&lt;string&gt; = new Animal('bird'); // Ok
+						const bird: Animal&lt;string&gt; = new Animal(1); // Error
+						const fish = new Animal('fish'); // Ok -> fish: Animal&lt;string&gt;
+						const insect = new Animal(); // Ok -> insect: Animal&lt;unknown&gt;
+					</code></pre>
+					<aside class="notes">
+						Generics is a parameterized type that allows you to declare type parameters that are temporary replacements for concrete types. These types will be instantiated at the time the function is called or the element is created. Generics are declared using single angle brackets, which enclose type parameters. If types do not match, there will be an error. Typescript also allows you to specify a default value for type parameters.
+					</aside>
+				</section>
+				<section>
+					<h4>Union Types</h4>
+					<pre><code class="hljs typescript" data-trim data-line-numbers>
+						function printId(id: number | string) {
+							console.log(id.toUpperCase());
+						// Property 'toUpperCase' does not exist on type 'string | number'
+						// Property 'toUpperCase' does not exist on type 'number'
+						}
+					</code></pre>
+					<span class="fragment fade-up hljs-code" data-fragment-index="1">so...</span>
+					<pre class="fragment fade-up" data-fragment-index="1"><code class="hljs typescript" data-trim data-line-numbers>
+						function printId(id: number | string) {
+							if (typeof id === "string") {
+								console.log(id.toUpperCase());
+							} else {
+								console.log(id);
+							}
+						}
+					</code></pre>
+					<aside class="notes">
+						Union is a type that allows you to create from a variety(вераети) of existing types a logical condition according to which data can belong to only one of the specified types. Because typescript does not know exactly which type will be set, we can`t use specific properties and methods that are in one of types but do not exist in other type. So we need to do a parameter type check before we want to use the existing properties and methods only on a particular type.
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h4>Intersection Types</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							class User {
+								id: number;
+								name: string;
+							}
+
+							class Contacts {
+								name: string;
+								email: string;
+								phone: string;
+							}
+							// must have properties id, name, email, phone
+							const contactsOfUser: User & Contacts;
+						</code></pre>
+						<aside class="notes">
+							Intersection - a type that allows you to consider multiple data types as a single entity. The value must have all the required attributes of each type that defines the intersection, otherwise an error will be throw.
+						</aside>
+					</section>
+					<section>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							contactsOfUser {
+								id: 1,
+								name: 'John',
+								email: 'a@example.com'
+							} // Error: missing property phone
+						</code></pre>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							contactsOfUser {
+								id: 1,
+								name: 'John',
+								email: 'a@example.com',
+								phone: '+380807414569'
+							} // Ok
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>Type Aliases</h4>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							type obj = { // object type
+								prop: string;
+								prop2: number;
+							}
+
+							type SomeType = number | string | boolean; // union type
+
+							type OtherType = number & string & boolean; // intersection type
+						</code></pre>
+						<aside class="notes">
+							Type Alias is declared using the type keyword, followed by the name of the alias, followed by an assignment operator, to the right of which is the type associated with the alias. You can also create type aliases for both union types and intersection types.
+						</aside>
+					</section>
+					<section>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							function foo({ id, name }: { id: number, name: string }): void {
+								//...
+							}
+						</code></pre>
+						<span class="hljs-code">or</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							type TUser = {
+								id: number;
+								name: string;
+							}
+
+							function foo(user: TUser): void {
+								//...
+							}
+						</code></pre>
+						<aside class="notes">
+							The type alias is used to keep code simple with bulk typing and to improve the readability of code.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<h4>Type Assertions</h4>
+					<pre><code class="hljs typescript" data-trim data-line-numbers>
+						const input = document.getElementById("my-input");
+						input.value // Error: property value does not exist on type Element | null
+					</code></pre>
+					<pre class="fragment fade-up" data-fragment-index="1"><code class="hljs typescript" data-trim data-line-numbers>
+						const input = document.getElementById("my-input") as HTMLInputElement;
+						input.value // Ok
+					</code></pre>
+					<span class="fragment hljs-code" data-fragment-index="1">or</span>
+					<pre class="fragment fade-up" data-fragment-index="1"><code class="hljs typescript" data-trim data-line-numbers>
+						const input = &lt;HTMLInputElement&gt;document.getElementById("my-input");
+					</code></pre>
+					<aside class="notes">
+						Sometimes the implicit typing of typescript can be very general. For example, typescript types html elements as Element | null, but we may need to specify a more specific type to be able to use the properties of the element, as well as remove the possible null if we know for sure that the element exists. For this, type assertion is used, when we explicitly indicate what type of element we want to receive. In this case, typescript relies solely on our typing. A type assertion can be specified in two ways: by using the as keyword after the value, or by specifying type in single angle brackets before the value.
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h3>Interfaces</h3>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							interface IUser {
+								id: number;
+								name: string;
+								email: string;
+								phone?: string;
+							}
+
+							const user: IUser = {
+								id: 1,
+								name: 'John',
+								email: 'a@example.com'
+							}
+						</code></pre>
+						<aside class="notes">
+							Interfaces - very similar to a type alias, the main difference is that type cannot be reopened to add new properties compared to an interface, which is always extensible.
+						</aside>
+					</section>
+					<section>
+						<span class="hljs-code">extends</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							interface Animal {
+								name: string;
+							}
+
+							interface Dog extends Animal {
+								tail: boolean;
+							}
+
+							const dog: Dog = {
+								name: 'Charly',
+								tail: true
+							}
+						</code></pre>
+						<aside class="notes">
+							Interface extension is done using the extends keyword (type aliases can be extended through intersection).
+						</aside>
+					</section>
+					<section>
+						<span class="hljs-code">implements</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							interface Animal {
+								name: string;
+								tail: boolean;
+							}
+
+							class Dog implements Animal {
+								tail: boolean = true;
+
+								constructor(name: string) { ... }
+							}
+
+							const dog = new Dog('Charly'); // dog: Animal
+							dog.tail // true
+						</code></pre>
+						<aside class="notes">
+							Interface is implemented using the implements keyword after the class name. A class that implements interface must fully implement it.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>Utility Types</h4>
+						<span class="fragment hljs-code" data-fragment-index="1">Partial&lt;Type&gt;</span>
+						<pre class="fragment fade-up" data-fragment-index="1"><code class="hljs typescript" data-trim data-line-numbers>
+							interface User {
+								id: number;
+								name: string;
+								email: string;
+								phone: string;
+							}
+
+							function foo(user: Partial&lt;User&gt;): void {
+								//..
+							}
+
+							foo({ }) // Ok
+							foo({ name: 'John' }) // Ok
+							foo({ id: 1, email: '@com', phone: '115' }) // Ok
+						</code></pre>
+						<aside class="notes">
+							Typescript has separate, utility types that make it easy to convert common types.
+							- Partial - creates a type whose Type properties are all set to optional.
+						</aside>
+					</section>
+					<section>
+						<span class="hljs-code">Required&lt;Type&gt;</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							interface User {
+								id?: number;
+								name?: string;
+								email: string;
+								phone: string;
+							}
+
+							function foo(user: Required&lt;User&gt;): void {
+								//..
+							}
+
+							foo({ id: 1, name: 'John' }) // Error
+							foo({ email: '@com', phone: '115' }) // Error
+							foo({ id: 1, name: 'John', email: '@com', phone: '115' }) // Ok
+						</code></pre>
+						<aside class="notes">
+							- Required - creates a type whose Type properties are all set to required (the opposite of a partial)
+						</aside>
+					</section>
+					<section>
+						<span class="hljs-code">Pick&lt;Type&gt;</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							interface User {
+								id: number;
+								name?: string;
+								email: string;
+								phone: string;
+							}
+
+							function foo(user: Pick&lt;User, "id"&gt;): void {
+								//..
+							}
+
+							foo({ id: 1, name: 'John' }) // Error
+							foo({ email: '@com', phone: '115' }) // Error
+							foo({ id: 1 }) // Ok
+						</code></pre>
+						<aside class="notes">
+							- Pick - selects the specified properties from Type.
+						</aside>
+					</section>
+					<section>
+						<span class="hljs-code">Omit&lt;Type&gt;</span>
+						<pre><code class="hljs typescript" data-trim data-line-numbers>
+							interface User {
+								id: number;
+								name?: string;
+								email: string;
+								phone: string;
+							}
+
+							function foo(user: Omit&lt;User, "email" | "phone"&gt;): void {
+								//..
+							}
+
+							foo({ email: '@com', id: 1 }) // Error
+							foo({ id: 1 }) // // Ok
+							foo({ id: 1, name: 'John' }) // Ok
+						</code></pre>
+						<aside class="notes">
+							- Omit - removes the specified properties from Type.
+						</aside>
+					</section>
+					<section>
+						<span class="hljs-code">and many others...</span>
+					</section>
+				</section>
+				<section>
+					Thanks for attention
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
