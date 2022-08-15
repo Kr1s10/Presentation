@@ -34,10 +34,10 @@
 							<li class="fragment">has interfaces & abstract classes</li>
 						</ul>
 						<aside class="notes">
-							Typescript is a compiled language, while Javascript is an interpreted (интЄрпритед) language, and TypeScript is compiled to Javascript, which allows TypeScript to be supported in all environments that support Javascript.
-							 Also, typescript is static and strongly typed, while Javascript is a dynamic and weakly typed language. Due to its typing, typescript eliminates the possibility of implicit type conversions, which is possible in javascript and leads to unexpected results. At the stage of compiling the code, all types must be set, otherwise typescript will give an error and will not compile the code. This helps to detect and eliminate many bugs even at the development stage and saves time.
-							 Based on the name of language, it is clear that it has many built-in types, which I will talk about. 
-							Another difference of typescript is that it contains access (Єксес) modifiers for properties and methods in classes, interfaces and abstract classes. Due to this, the typescript can fully implement such OOP principles as inheritance (инхЄритенс), polymorphism, and encapsulation.
+							Typescript is a compiled language, while Javascript is an interpreted language, and TypeScript is compiled to Javascript, which allows TypeScript to be supported in all environments that support Javascript.
+							Also, typescript is static and strongly typed, while Javascript is a dynamic and weakly typed language. Due to its typing, typescript eliminates the possibility of implicit type conversions, which is possible in javascript and leads to unexpected results. At the stage of compiling the code, all types must be set, otherwise typescript will give an error and will not compile the code. This helps to detect and eliminate many bugs even at the development stage and saves time.
+							Based on the name of language, it is clear that it has many built-in types, which I will talk about. 
+							Another difference of typescript is that it contains access modifiers for properties and methods in classes, interfaces and abstract classes. Due to this, the typescript can fully implement such OOP principles as inheritance, polymorphism, and encapsulation.
 						</aside>
 					</section>
 				</section>
@@ -54,7 +54,7 @@
 						const n: number = obj;
 					</code></pre>
 					<aside class="notes">
-						TypeScript defines the any type, which doesn’t exist in the JavaScript world. It is the basic type for all other types and is compatible (кємпАтбл) with them. If this type is set, we can access any properties of this value, even if they don’t exist, call this value as a function, and typescript will not throw an error. But specifying the any type is recommended only in extreme cases, because then the benefit of typing is reduced to zero.
+						TypeScript defines the any type, which doesn’t exist in the JavaScript world. It is the basic type for all other types and is compatible with them. If this type is set, we can access any properties of this value, even if they don’t exist, call this value as a function, and typescript will not throw an error. But specifying the any type is recommended only in extreme cases, because then the benefit of typing is reduced to zero.
 					</aside>
 				</section>
 				<section>
@@ -72,7 +72,7 @@
 							v();
 						</code></pre>
 						<aside class="notes">
-							unknown - is a safe analogue (Аналог) of the any type, it is forbidden to perform any operations on it, except for operations with logical and comparison operators. Any other operation will be treated as an error.
+							unknown - is a safe analogue of the any type, it is forbidden to perform any operations on it, except for operations with logical and comparison operators. Any other operation will be treated as an error.
 						</aside>
 					</section>
 					<section>
@@ -99,7 +99,7 @@
 						</code></pre>
 						<aside class="notes">
 							never - is used to specify that any operation will never be performed. It can only be set to function from which the program can really never exit (throws an error or contains an infinite loop).
-							void - this type can be called the complete opposite of the any type, since this type means the absence (Абсэс) of a concrete type. The main purpose of this type is to explicitly indicate that a function or method does not have a return value.
+							void - this type can be called the complete opposite of the any type, since this type means the absence of a concrete type. The main purpose of this type is to explicitly indicate that a function or method does not have a return value.
 						</aside>
 					</section>
 					<section>
@@ -241,7 +241,7 @@
 						}
 					</code></pre>
 					<aside class="notes">
-						Union is a type that allows you to create from a variety(вераети) of existing types a logical condition according to which data can belong to only one of the specified types. Because typescript does not know exactly which type will be set, we can`t use specific properties and methods that are in one of types but do not exist in other type. So we need to do a parameter type check before we want to use the existing properties and methods only on a particular type.
+						Union is a type that allows you to create from a variety of existing types a logical condition according to which data can belong to only one of the specified types. Because typescript does not know exactly which type will be set, we can`t use specific properties and methods that are in one of types but do not exist in other type. So we need to do a parameter type check before we want to use the existing properties and methods only on a particular type.
 					</aside>
 				</section>
 				<section>
